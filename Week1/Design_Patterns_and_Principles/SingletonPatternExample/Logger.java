@@ -1,4 +1,4 @@
-package Week1.Design_Patterns_and_Principles;
+package Week1.Design_Patterns_and_Principles.SingletonPatternExample;
 
 public class Logger {
 
