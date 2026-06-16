@@ -1,8 +1,9 @@
+package org.example;
+
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
 public class CalculatorTest {
     private Calculator calculator;
