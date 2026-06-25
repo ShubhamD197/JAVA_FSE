@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class SpringLearnApplication {
 
@@ -29,10 +32,10 @@ public class SpringLearnApplication {
 		ApplicationContext context =
 				new ClassPathXmlApplicationContext("country.xml");
 
-		Country country =
-				context.getBean("country", Country.class);
+		List<Country> countries =
+				(List<Country>) context.getBean("countryList");
 
-		LOGGER.info("Country : {}", country);
+		LOGGER.info("Country : {}", countries);
 
 		LOGGER.info("End");
 	}
