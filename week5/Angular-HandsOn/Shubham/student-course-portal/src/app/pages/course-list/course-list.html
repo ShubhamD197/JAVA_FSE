@@ -14,7 +14,9 @@
 
         @for (c of courses; track c.id) {
             <app-course-card
+                appHighlight
                 [course]="c"
+                [isEnrolled]="c.id === selectedCourseId"
                 (enrollRequested)="onEnroll($event)">
             </app-course-card>
         }

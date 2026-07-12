@@ -6,11 +6,12 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { CreditLabelPipe } from '../../pipes/credit-label-pipe';
 @Component({
   selector: 'app-course-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, CreditLabelPipe],
   templateUrl: './course-card.html',
   styleUrl: './course-card.css',
 })
@@ -26,8 +27,22 @@ export class CourseCard implements OnChanges {
     gradeStatus: string;
   };
 
+  @Input()
+  isEnrolled: boolean = false;
+
   @Output()
   enrollRequested = new EventEmitter<number>();
+
+  isExpanded: boolean = false;
+
+  // Getters keep templates clean by keeping complex logic in the component class instead of the template
+  get cardClasses() {
+    return {
+      'card--enrolled': this.isEnrolled,
+      'card--full': this.course.credits >= 4,
+      'expanded': this.isExpanded
+    };
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log("Previous Value: " + changes['course'].previousValue);
