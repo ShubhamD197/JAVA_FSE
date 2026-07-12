@@ -6,8 +6,23 @@
 
     <p><strong>Credits:</strong> {{ course.credits }}</p>
 
-    <button
-        (click)="enrollRequested.emit(course.id)">
+    @switch (course.gradeStatus) {
+
+    @case ('passed') {
+    <span style="color:green;">Passed</span>
+    }
+
+    @case ('failed') {
+    <span style="color:red;">Failed</span>
+    }
+
+    @case ('pending') {
+    <span style="color:gray;">Pending</span>
+    }
+
+    }
+
+    <button disabled (click)="enrollRequested.emit(course.id)">
         Enroll
     </button>
 

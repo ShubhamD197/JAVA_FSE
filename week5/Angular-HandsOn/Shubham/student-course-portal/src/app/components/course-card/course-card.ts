@@ -9,6 +9,7 @@ import {
 
 @Component({
   selector: 'app-course-card',
+  standalone: true,
   imports: [],
   templateUrl: './course-card.html',
   styleUrl: './course-card.css',
@@ -22,6 +23,7 @@ export class CourseCard implements OnChanges {
     name: string;
     code: string;
     credits: number;
+    gradeStatus: string;
   };
 
   @Output()
@@ -29,7 +31,7 @@ export class CourseCard implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log("Previous Value: " + changes['course'].previousValue);
-    console.log("Current Value: " + changes['course'].currentValue.nam);
+    console.log("Current Value: " + changes['course'].currentValue.name);
   }
 
 }
