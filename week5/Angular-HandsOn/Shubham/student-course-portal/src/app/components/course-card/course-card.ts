@@ -7,11 +7,12 @@ import {
   EventEmitter
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CreditLabelPipe } from '../../pipes/credit-label-pipe';
 
 @Component({
   selector: 'app-course-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CreditLabelPipe],
   templateUrl: './course-card.html',
   styleUrl: './course-card.css',
 })

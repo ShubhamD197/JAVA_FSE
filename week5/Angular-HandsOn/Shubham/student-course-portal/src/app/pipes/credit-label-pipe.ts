@@ -5,17 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CreditLabelPipe implements PipeTransform {
 
-  transform(value: number | null): string {
+  transform(credits: number): string {
 
-    if (value === null || value === undefined || value === 0) {
-      return 'No Credits';
+    if (credits >= 4) {
+      return 'High Credit';
     }
 
-    if (value === 1) {
-      return '1 Credit';
+    if (credits === 3) {
+      return 'Medium Credit';
     }
 
-    return `${value} Credits`;
+    return 'Low Credit';
   }
 
 }
