@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 .card--enrolled {
     background-color: #f0f8ff;
     border: 2px solid #0056b3;
@@ -9,4 +10,22 @@
 
 .expanded {
     height: 300px;
+=======
+.course-card {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.passed-course {
+    background-color: #d4edda;
+}
+
+.failed-course {
+    background-color: #f8d7da;
+}
+
+.pending-course {
+    background-color: #fff3cd;
+>>>>>>> Stashed changes
 }
