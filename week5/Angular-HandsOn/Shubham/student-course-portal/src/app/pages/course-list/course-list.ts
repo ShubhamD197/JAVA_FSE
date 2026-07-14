@@ -29,42 +29,38 @@ export class CourseList implements OnInit {
     return course.id;
   }
 
-  courses = [
-    {
-      id: 1,
-      name: 'Angular',
-      code: 'ANG101',
-      credits: 4,
-      gradeStatus: 'passed'
-    },
-    {
-      id: 2,
-      name: 'Java',
-      code: 'JAVA201',
-      credits: 3,
-      gradeStatus: 'failed'
-    },
-    {
-      id: 3,
-      name: 'Spring Boot',
-      code: 'SPR301',
-      credits: 4,
-      gradeStatus: 'pending'
-    },
-    {
-      id: 4,
-      name: 'Database Systems',
-      code: 'DB401',
-      credits: 3,
-      gradeStatus: 'passed'
-    },
-    {
-      id: 5,
-      name: 'Cloud Computing',
-      code: 'CC501',
-      credits: 4,
-      gradeStatus: 'pending'
-    }
+  
+ courses = [
+  {
+    id: 1,
+    name: 'Angular',
+    code: 'ANG101',
+    credits: 4,
+    gradeStatus: 'passed',
+    fee: 25000,
+    startDate: new Date('2026-08-10'),
+    completion: 0.85
+  },
+  {
+    id: 2,
+    name: 'Java',
+    code: 'JAVA201',
+    credits: 3,
+    gradeStatus: 'failed',
+    fee: 18000,
+    startDate: new Date('2026-09-15'),
+    completion: 0.45
+  },
+  {
+    id: 3,
+    name: 'Spring Boot',
+    code: 'SPR301',
+    credits: 4,
+    gradeStatus: 'pending',
+    fee: 22000,
+    startDate: new Date('2026-10-01'),
+    completion: 0.60
+  }
   ];
 
   selectedCourseId?: number;

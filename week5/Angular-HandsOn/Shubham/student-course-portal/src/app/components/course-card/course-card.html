@@ -1,29 +1,38 @@
-<div class="course-card">
+<<<<<<< Updated upstream
+<div class="course-card" [ngClass]="cardClasses" [ngStyle]="{'border-left-color': course.gradeStatus === 'passed' ? 'green' : course.gradeStatus === 'failed' ? 'red' : 'gray'}">
+=======
+<div class="course-card" [ngClass]="{
+        'passed-course': course.gradeStatus === 'passed',
+        'failed-course': course.gradeStatus === 'failed',
+        'pending-course': course.gradeStatus === 'pending'
+    }" [ngStyle]="{
+        'border': course.credits === 4 ? '2px solid blue' : '1px solid gray'
+    }">
+>>>>>>> Stashed changes
 
-    <h3>{{ course.name }}</h3>
+    <h3>{{ course.name | uppercase }}</h3>
 
-    <p><strong>Code:</strong> {{ course.code }}</p>
+    <p><strong>Code:</strong> {{ course.code | lowercase }}</p>
 
-    <p><strong>Credits:</strong> {{ course.credits }}</p>
+<<<<<<< Updated upstream
+    <p><strong>Credits:</strong>{{ course.credits | creditLabel }}</p>
+=======
+    <p><strong>Credits:</strong> {{ course.credits | number:'1.0-0' }}</p>
+>>>>>>> Stashed changes
 
-    @switch (course.gradeStatus) {
+    <p><strong>Status:</strong> {{ course.gradeStatus | titlecase }}</p>
 
-    @case ('passed') {
-    <span style="color:green;">Passed</span>
-    }
+    <p><strong>Fee:</strong> {{ course.fee | currency:'INR' }}</p>
+    
+    <p><strong>Start Date:</strong> {{ course.startDate | date:'dd/MM/yyyy' }}</p>
+    
+    <p><strong>Completion:</strong> {{ course.completion | percent }}</p>
 
-    @case ('failed') {
-    <span style="color:red;">Failed</span>
-    }
-
-    @case ('pending') {
-    <span style="color:gray;">Pending</span>
-    }
-
-    }
-
-    <button disabled (click)="enrollRequested.emit(course.id)">
+    <button (click)="enrollRequested.emit(course.id)">
         Enroll
+    </button>
+    <button (click)="isExpanded = !isExpanded">
+        Show Details
     </button>
 
 </div>
