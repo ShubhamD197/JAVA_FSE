@@ -7,19 +7,11 @@ import {
   EventEmitter
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-<<<<<<< Updated upstream
-import { CreditLabelPipe } from '../../pipes/credit-label-pipe';
-@Component({
-  selector: 'app-course-card',
-  standalone: true,
-  imports: [CommonModule, CreditLabelPipe],
-=======
 
 @Component({
   selector: 'app-course-card',
   standalone: true,
   imports: [CommonModule],
->>>>>>> Stashed changes
   templateUrl: './course-card.html',
   styleUrl: './course-card.css',
 })
