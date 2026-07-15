@@ -1,16 +1,12 @@
 <h2>Reactive Enrollment Form</h2>
 
-<form
-    [formGroup]="enrollForm"
-    (ngSubmit)="onSubmit()">
+<form [formGroup]="enrollForm" (ngSubmit)="onSubmit()">
 
     <div>
 
         <label>Student Name</label>
 
-        <input
-            type="text"
-            formControlName="studentName">
+        <input type="text" formControlName="studentName">
 
     </div>
 
@@ -20,10 +16,16 @@
 
         <label>Student Email</label>
 
-        <input
-            type="email"
-            formControlName="studentEmail">
+        <input type="email" formControlName="studentEmail">
+        @if(enrollForm.get('studentEmail')?.errors?.['emailTaken']){
 
+        <div style="color:red">
+
+            Email already exists.
+
+        </div>
+
+        }
     </div>
 
     <br>
@@ -32,9 +34,24 @@
 
         <label>Course ID</label>
 
-        <input
-            type="text"
-            formControlName="courseId">
+        <input type="text" formControlName="courseId">
+
+        @if(enrollForm.get('courseId')?.errors?.['required']
+        && enrollForm.get('courseId')?.touched){
+
+        <div style="color:red">
+            Course ID is required.
+        </div>
+
+        }
+
+        @if(enrollForm.get('courseId')?.errors?.['noCourseCode']){
+
+        <div style="color:red">
+            Course code starting with XX is not allowed.
+        </div>
+
+        }
 
     </div>
 
@@ -64,9 +81,7 @@
 
         <label>
 
-            <input
-                type="checkbox"
-                formControlName="agreeToTerms">
+            <input type="checkbox" formControlName="agreeToTerms">
 
             I Agree to the Terms & Conditions
 
@@ -75,10 +90,41 @@
     </div>
 
     <br>
+    <hr>
 
-    <button
-        type="submit"
-        [disabled]="enrollForm.invalid">
+    <h3>Additional Courses</h3>
+
+    <button type="button" (click)="addCourse()">
+
+        Add Another Course
+
+    </button>
+
+    <br><br>
+
+    <div formArrayName="additionalCourses">
+
+        @for (ctrl of additionalCourses.controls; track $index; let i = $index) {
+
+        <div>
+
+            <input type="text" [formControlName]="i" placeholder="Enter Course Code">
+
+            <button type="button" (click)="removeCourse(i)">
+
+                Remove
+
+            </button>
+
+        </div>
+
+        <br>
+
+        }
+
+    </div>
+
+    <button type="submit" [disabled]="enrollForm.invalid">
 
         Submit
 

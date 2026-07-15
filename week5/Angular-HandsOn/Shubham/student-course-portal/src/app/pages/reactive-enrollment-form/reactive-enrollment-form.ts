@@ -3,9 +3,14 @@ import {
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
-  Validators
+  Validators,
+  FormArray,
+  FormControl
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { noCourseCode } from '../../validators/no-course-code.validator';
+import { simulateEmailCheck } from '../../validators/email.validator';
+
 
 @Component({
   selector: 'app-reactive-enrollment-form',
@@ -31,17 +36,23 @@ export class ReactiveEnrollmentForm {
         ]
       ],
 
-      studentEmail: [
+      studentEmail: this.fb.control(
         '',
         [
           Validators.required,
           Validators.email
+        ],
+        [
+          simulateEmailCheck
         ]
-      ],
+      ),
 
       courseId: [
-        null,
-        Validators.required
+        '',
+        [
+          Validators.required,
+          noCourseCode
+        ]
       ],
 
       preferredSemester: [
@@ -52,9 +63,31 @@ export class ReactiveEnrollmentForm {
       agreeToTerms: [
         false,
         Validators.requiredTrue
-      ]
+      ],
+
+      additionalCourses: this.fb.array([]),
 
     });
+
+  }
+  get additionalCourses(): FormArray {
+    return this.enrollForm.get('additionalCourses') as FormArray;
+  }
+  addCourse() {
+
+    this.additionalCourses.push(
+
+      new FormControl(
+        '',
+        Validators.required
+      )
+
+    );
+
+  }
+  removeCourse(index: number) {
+
+    this.additionalCourses.removeAt(index);
 
   }
 
