@@ -1,86 +1,23 @@
-<h2>Course Enrollment Form</h2>
-@if(successMessage){
+<h2>Enrolled Courses</h2>
 
-<div style="color:green">
+@if(enrolledCourses.length > 0){
 
-    {{ successMessage }}
+<ul>
 
-</div>
+@for(course of enrolledCourses; track course.id){
+
+<li>
+
+{{ course.name }}
+
+</li>
 
 }
-<form #enrollmentForm="ngForm" (ngSubmit)="onSubmit(enrollmentForm)">
 
-    <label>Student Name</label>
+</ul>
 
-    <input type="text" name="studentName" [(ngModel)]="studentName" required minlength="3" #studentNameRef="ngModel">
-    @if (studentNameRef.invalid && studentNameRef.touched) {
+}@else{
 
-    <div style="color:red">
+<p>No courses enrolled.</p>
 
-        @if (studentNameRef.errors?.['required']) {
-        <small>Name is required.</small>
-        }
-
-        @if (studentNameRef.errors?.['minlength']) {
-        <small>Name must be at least 3 characters.</small>
-        }
-
-    </div>
-
-    }
-    <br><br>
-
-    <label>Email</label>
-
-    <input type="email" name="email" [(ngModel)]="email" required email #emailRef="ngModel">
-    @if (emailRef.invalid && emailRef.touched) {
-
-    <div style="color:red">
-
-        @if (emailRef.errors?.['required']) {
-        <small>Email is required.</small>
-        }
-
-        @if (emailRef.errors?.['email']) {
-        <small>Enter a valid email address.</small>
-        }
-
-    </div>
-
-    }
-    <br><br>
-
-    <select name="course" [(ngModel)]="selectedCourse" required #courseRef="ngModel">
-
-        <option value="">-- Select Course --</option>
-
-        @for (course of courses; track course) {
-        <option [value]="course">
-            {{ course }}
-        </option>
-        }
-
-    </select>
-    @if (courseRef.invalid && courseRef.touched) {
-
-    <div style="color:red">
-        <small>Please select a course.</small>
-    </div>
-
-    }
-    <br><br>
-
-    <button type="submit" [disabled]="enrollmentForm.invalid">
-        Enroll
-    </button>
-</form>
-
-<hr>
-
-<h3>Live Preview</h3>
-
-<p>Name : {{ studentName }}</p>
-
-<p>Email : {{ email }}</p>
-
-<p>Course : {{ selectedCourse }}</p>
+}

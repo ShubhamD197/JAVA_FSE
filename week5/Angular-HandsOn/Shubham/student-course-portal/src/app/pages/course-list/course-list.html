@@ -16,7 +16,7 @@
             <app-course-card
                 appHighlight
                 [course]="c"
-                [isEnrolled]="c.id === selectedCourseId"
+                [isEnrolled_]="c.id === selectedCourseId"
                 (enrollRequested)="onEnroll($event)">
             </app-course-card>
         }
