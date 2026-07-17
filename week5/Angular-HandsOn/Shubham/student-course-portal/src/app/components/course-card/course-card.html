@@ -9,24 +9,20 @@
     <h3>{{ course.name | uppercase }}</h3>
 
     <p><strong>Code:</strong> {{ course.code | lowercase }}</p>
-    
+
     <p>
         <strong>Credit Label:</strong>
         {{ course.credits | creditLabel }}
     </p>
-    
+
     <p><strong>Credits:</strong> {{ course.credits | creditLabel }}</p>
 
     <p><strong>Status:</strong> {{ course.gradeStatus | titlecase }}</p>
 
-    <p><strong>Fee:</strong> {{ course.fee | currency:'INR' }}</p>
+    <button type="button" (click)="toggleEnrollment()">
 
-    <p><strong>Start Date:</strong> {{ course.startDate | date:'dd/MM/yyyy' }}</p>
+        {{ isEnrolled() ? 'Unenroll' : 'Enroll' }}
 
-    <p><strong>Completion:</strong> {{ course.completion | percent }}</p>
-
-    <button (click)="enrollRequested.emit(course.id)">
-        Enroll
     </button>
     <button (click)="isExpanded = !isExpanded">
         Show Details

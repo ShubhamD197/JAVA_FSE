@@ -1,39 +1,41 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { CourseService } from '../../services/course';
+import { CourseSummaryWidget } from '../../components/course-summary-widget/course-summary-widget';
 @Component({
   selector: 'app-home',
-  imports: [FormsModule],
+  imports: [FormsModule, CourseSummaryWidget],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 
-export class Home implements OnInit, OnDestroy{
+export class Home implements OnInit, OnDestroy {
   portalName = 'Student Course Portal';
 
   // [property] performs one-way binding from the component to the view,
   isPortalActive = true;
 
+  availableCourses = 0;
+
+  constructor(private courseService: CourseService) {}
+
+  ngOnInit(): void {
+    this.availableCourses = this.courseService.getCourses().length;
+    console.log(`Home component initialised: Total courses loaded ` + this.availableCourses);
+  }
+
   message = '';
 
-  onEnrollClick(){
+  onEnrollClick() {
     this.message = "Enrollment opened";
   }
 
   // while [(ngModel)] provides two-way binding between the component and the view.
   searchTerm = "";
 
-  availableCourses = 0;
-
-  ngOnInit(): void {
-    this.availableCourses = 12;
-
-    console.log(`Home component initialised: Total courses loaded ` + this.availableCourses);
-  }
-
   ngOnDestroy(): void {
-  console.log('HomeComponent destroyed');
-}
+    console.log('HomeComponent destroyed');
+  }
 }
 
 
