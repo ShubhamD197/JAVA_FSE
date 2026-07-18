@@ -4,27 +4,36 @@
 </p>
 }
 
+<input type="text" [(ngModel)]="searchTerm" placeholder="Search Course">
+
+<button (click)="searchCourses()">
+
+    Search
+
+</button>
+
+<br><br>
+
 @if (isLoading) {
 
-    <p>Loading courses...</p>
+<p>Loading courses...</p>
 
 } @else {
 
-    @if (courses.length > 0) {
+@if (courses.length > 0) {
 
-        @for (c of courses; track c.id) {
-            <app-course-card
-                appHighlight
-                [course]="c"
-                [isEnrolled_]="c.id === selectedCourseId"
-                (enrollRequested)="onEnroll($event)">
-            </app-course-card>
-        }
+@for (c of courses; track c.id) {
+<div (click)="goToCourse(c.id)">
+    <app-course-card appHighlight [course]="c" [isEnrolled_]="c.id === selectedCourseId"
+        (enrollRequested)="onEnroll($event)">
+    </app-course-card>
+</div>
+}
 
-    } @else {
+} @else {
 
-        <p>No courses available.</p>
+<p>No courses available.</p>
 
-    }
+}
 
 }
