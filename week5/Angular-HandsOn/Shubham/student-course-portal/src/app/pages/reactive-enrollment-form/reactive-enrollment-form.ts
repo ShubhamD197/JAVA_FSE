@@ -10,7 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { noCourseCode } from '../../validators/no-course-code.validator';
 import { simulateEmailCheck } from '../../validators/email.validator';
-
+import { CourseService } from '../../services/course';
 
 @Component({
   selector: 'app-reactive-enrollment-form',
@@ -19,10 +19,14 @@ import { simulateEmailCheck } from '../../validators/email.validator';
   templateUrl: './reactive-enrollment-form.html',
   styleUrl: './reactive-enrollment-form.css',
 })
+
 export class ReactiveEnrollmentForm {
   enrollForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+     private courseService: CourseService
+  ) { }
 
   ngOnInit(): void {
 
@@ -70,9 +74,11 @@ export class ReactiveEnrollmentForm {
     });
 
   }
+
   get additionalCourses(): FormArray {
     return this.enrollForm.get('additionalCourses') as FormArray;
   }
+
   addCourse() {
 
     this.additionalCourses.push(
@@ -85,6 +91,7 @@ export class ReactiveEnrollmentForm {
     );
 
   }
+
   removeCourse(index: number) {
 
     this.additionalCourses.removeAt(index);
@@ -113,5 +120,28 @@ export class ReactiveEnrollmentForm {
     console.log("Raw Form Value");
     console.log(this.enrollForm.getRawValue());
 
+    const newCourse = {
+
+      name: this.enrollForm.value.studentName,
+
+      code: this.enrollForm.value.courseId,
+
+      credits: 4,
+
+      gradeStatus: 'pending' as const
+
+    };
+
+    this.courseService.createCourse(newCourse).subscribe({
+
+      next: (course) => {
+
+        console.log('Course Created');
+
+        console.log(course);
+
+      }
+
+    });
   }
 }

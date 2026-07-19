@@ -17,8 +17,9 @@ export class StudentProfile implements OnInit {
 
   ngOnInit(): void {
 
-    this.enrolledCourses =
-      this.enrollmentService.getEnrolledCourses();
+    this.enrollmentService.getEnrolledCourses().subscribe(
+      courses => this.enrolledCourses = courses
+    );
 
   }
 

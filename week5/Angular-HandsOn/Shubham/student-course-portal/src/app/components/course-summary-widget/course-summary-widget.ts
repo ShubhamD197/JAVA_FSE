@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CourseService } from '../../services/course';
 
 @Component({
@@ -11,12 +11,26 @@ import { CourseService } from '../../services/course';
 export class CourseSummaryWidget implements OnInit {
 
   courseCount = 0;
+  availableCourses = 0;
 
-  constructor(private courseService: CourseService) {}
+  constructor(
+    private courseService: CourseService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
 
-    this.courseCount = this.courseService.getCourses().length;
+   this.courseService.getCourses().subscribe({
+      next: (courses) => {
+        this.availableCourses = courses.length;
+        console.log(`Home component initialised: Total courses loaded ` + this.availableCourses);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        this.cdr.detectChanges();
+      }
+    });
 
   }
 
