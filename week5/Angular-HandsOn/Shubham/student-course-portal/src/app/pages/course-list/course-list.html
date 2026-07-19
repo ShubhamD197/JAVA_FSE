@@ -7,12 +7,20 @@
 <input type="text" [(ngModel)]="searchTerm" placeholder="Search Course">
 
 <button (click)="searchCourses()">
-
     Search
-
 </button>
 
 <br><br>
+
+@if(errorMessage){
+
+<p style="color:red;">
+
+{{ errorMessage }}
+
+</p>
+
+}
 
 @if (isLoading) {
 
@@ -24,7 +32,9 @@
 
 @for (c of courses; track c.id) {
 <div (click)="goToCourse(c.id)">
-    <app-course-card appHighlight [course]="c" [isEnrolled_]="c.id === selectedCourseId"
+    <app-course-card 
+    appHighlight [course]="c" 
+    [isEnrolled_]="c.id === selectedCourseId"
         (enrollRequested)="onEnroll($event)">
     </app-course-card>
 </div>

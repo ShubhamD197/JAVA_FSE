@@ -38,12 +38,12 @@ export class CourseCard implements OnChanges {
 
   // Getters keep templates clean by keeping complex logic in the component class instead of the template
   get cardClasses() {
-    return {
-      'card--enrolled': this.isEnrolled,
-      'card--full': this.course.credits >= 4,
-      'expanded': this.isExpanded
-    };
-  }
+  return {
+    'card--enrolled': this.isEnrolled(),
+    'card--full': this.course.credits >= 4,
+    'expanded': this.isExpanded
+  };
+}
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log("Previous Value: " + changes['course'].previousValue);

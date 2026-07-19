@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class CourseList implements OnInit {
-
+  errorMessage = '';
   courses: Course[] = [];
 
   constructor(
@@ -36,14 +36,42 @@ export class CourseList implements OnInit {
   isLoading = true;
 
   ngOnInit(): void {
+
     console.log('ngOnInit called');
 
+    this.searchTerm =
+      this.route.snapshot.queryParamMap.get('search') ?? '';
+
     setTimeout(() => {
-      this.courses = this.courseService.getCourses();
-      this.searchTerm = this.route.snapshot.queryParamMap.get('search') ?? '';
-      this.isLoading = false;
-      this.cdr.detectChanges();
+
+      this.courseService.getCourses().subscribe({
+
+        next: (courses) => {
+
+          console.log('Received courses:', courses);
+
+          this.courses = courses;
+
+          this.isLoading = false;
+          
+          this.cdr.detectChanges();
+
+        },
+
+        error: (err) => {
+
+          this.errorMessage = err.message;
+
+          this.isLoading = false;
+          
+          this.cdr.detectChanges();
+
+        }
+
+      });
+
     }, 1000);
+
   }
 
   trackByCourseId(index: number, course: any): number {
