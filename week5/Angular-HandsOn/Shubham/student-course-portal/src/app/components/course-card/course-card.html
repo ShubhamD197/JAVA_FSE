@@ -1,7 +1,8 @@
 <div class="course-card" [ngClass]="{
         'passed-course': course.gradeStatus === 'passed',
         'failed-course': course.gradeStatus === 'failed',
-        'pending-course': course.gradeStatus === 'pending'
+        'pending-course': course.gradeStatus === 'pending',
+        'card--enrolled': (isEnrolled$ | async)
     }" [ngStyle]="{
         'border': course.credits === 4 ? '2px solid blue' : '1px solid gray'
     }">
@@ -20,9 +21,7 @@
     <p><strong>Status:</strong> {{ course.gradeStatus | titlecase }}</p>
 
     <button type="button" (click)="toggleEnrollment()">
-
-        {{ isEnrolled() ? 'Unenroll' : 'Enroll' }}
-
+        {{ (isEnrolled$ | async) ? 'Unenroll' : 'Enroll' }}
     </button>
     <button (click)="isExpanded = !isExpanded">
         Show Details

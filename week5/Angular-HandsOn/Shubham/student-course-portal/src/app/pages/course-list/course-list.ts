@@ -1,11 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourseCard } from '../../components/course-card/course-card';
-import { CourseService } from '../../services/course';
 import { Course } from '../../models/course.model';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { loadCourses } from '../../store/course/course.actions';
+import { selectAllCourses, selectCoursesLoading, selectCoursesError } from '../../store/course/course.selectors';
+import { selectEnrolledIds } from '../../store/enrollment/enrollment.selectors';
 
 @Component({
   selector: 'app-course-list',
@@ -16,104 +20,49 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class CourseList implements OnInit {
-  errorMessage = '';
-  courses: Course[] = [];
+  errorMessage$: Observable<string | null>;
+  courses$: Observable<Course[]>;
+  isLoading$: Observable<boolean>;
+  enrolledIds$: Observable<number[]>;
+
+  private store = inject(Store);
 
   constructor(
-
-    private courseService: CourseService,
-
     private router: Router,
-
     private route: ActivatedRoute
-
-  ) { }
+  ) {
+    this.courses$ = this.store.select(selectAllCourses);
+    this.isLoading$ = this.store.select(selectCoursesLoading);
+    this.errorMessage$ = this.store.select(selectCoursesError);
+    this.enrolledIds$ = this.store.select(selectEnrolledIds);
+  }
 
   searchTerm = '';
 
   private cdr = inject(ChangeDetectorRef);
 
-  isLoading = true;
-
   ngOnInit(): void {
-
     console.log('ngOnInit called');
-
-    this.searchTerm =
-      this.route.snapshot.queryParamMap.get('search') ?? '';
-
-    setTimeout(() => {
-
-      this.courseService.getCourses().subscribe({
-
-        next: (courses) => {
-
-          console.log('Received courses:', courses);
-
-          this.courses = courses;
-
-          this.isLoading = false;
-          
-          this.cdr.detectChanges();
-
-        },
-
-        error: (err) => {
-
-          this.errorMessage = err.message;
-
-          this.isLoading = false;
-          
-          this.cdr.detectChanges();
-
-        }
-
-      });
-
-    }, 1000);
-
+    this.searchTerm = this.route.snapshot.queryParamMap.get('search') ?? '';
+    this.store.dispatch(loadCourses());
   }
 
   trackByCourseId(index: number, course: any): number {
     return course.id;
   }
 
-
   selectedCourseId?: number;
 
   onEnroll(courseId: number) {
     console.log('Enrolling in course:', courseId);
-
     this.selectedCourseId = courseId;
   }
 
   goToCourse(courseId: number) {
-
-    this.router.navigate(
-
-      ['courses', courseId]
-
-    );
-
+    this.router.navigate(['courses', courseId]);
   }
 
   searchCourses() {
-
-    this.router.navigate(
-
-      ['courses'],
-
-      {
-
-        queryParams: {
-
-          search: this.searchTerm
-
-        }
-
-      }
-
-    );
-
+    this.router.navigate(['courses'], { queryParams: { search: this.searchTerm } });
   }
 }
